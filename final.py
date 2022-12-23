@@ -14,8 +14,11 @@ paraview.simple._DisableFirstRenderCameraReset()
 # ----------------------------------------------------------------
 
 # get the material library
-for file in os.listdir("/Users/macbook/OneDrive - UvA/mantle01/"):
-    materialLibrary1 = GetMaterialLibrary()
+materialLibrary1 = GetMaterialLibrary()
+directories = ['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25']
+for num in directories:
+ for file in os.listdir(f"/Users/macbook/OneDrive - UvA/mantle{num}"):
+  
 
 # Create a new 'Render View'
     renderView1 = CreateView('RenderView')
@@ -62,7 +65,7 @@ for file in os.listdir("/Users/macbook/OneDrive - UvA/mantle01/"):
     SetActiveView(renderView1)
     
     # Create a new 'Render View'
-    spherical001nc = NetCDFReader(registrationName=f'{file}', FileName=[f'/Users/macbook/OneDrive - UvA/mantle01/{file}'])
+    spherical001nc = NetCDFReader(registrationName=f'{file}', FileName=[f'/Users/macbook/OneDrive - UvA/mantle{num}/{file}'])
     spherical001nc.Dimensions = '(lat, r, lon)'
 
 #    spherical001nc.Dimensions = '(lat, r, lon)'
@@ -407,10 +410,8 @@ for file in os.listdir("/Users/macbook/OneDrive - UvA/mantle01/"):
     # ----------------------------------------------------------------
     # restore active source
     SetActiveSource(text1)
-    #SetActiveSource(spherical002nc)
     # ----------------------------------------------------------------
-    WriteImage(f'/Users/macbook/{file}.png', renderView1, ImageResolution=[1784 ,728])
-    
+    WriteImage(f'/Users/macbook/OneDrive - UvA/{file}.png', renderView1,ImageResolution=[1784 ,728])    
     
     # ----------------------------------------------------------------
     # restore active source
@@ -419,5 +420,4 @@ for file in os.listdir("/Users/macbook/OneDrive - UvA/mantle01/"):
 
 
 if __name__ == '__main__':
-    # generate extracts
     SaveExtracts(ExtractsOutputDirectory='extracts')

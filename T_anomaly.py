@@ -1,5 +1,7 @@
 # state file generated using paraview version 5.11.0-RC2
 import paraview
+import sys, os
+
 paraview.compatibility.major = 5
 paraview.compatibility.minor = 11
 
@@ -14,23 +16,24 @@ paraview.simple._DisableFirstRenderCameraReset()
 
 # get the material library
 materialLibrary1 = GetMaterialLibrary()
-for file in os.listdir("/Users/macbook/OneDrive - UvA/mantle01/"):
+directories = ['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25']
+for num in directories:
+ for file in os.listdir(f"/Users/macbook/OneDrive - UvA/mantle{num}"):
 
     # Create a new 'Render View'
     renderView1 = CreateView('RenderView')
-    renderView1.ViewSize = [1784, 1122]
+    renderView1.ViewSize = [1784, 1128]
     renderView1.AxesGrid = 'GridAxes3DActor'
     renderView1.OrientationAxesVisibility = 0
-    renderView1.CenterOfRotation = [-2632.4877835455604, 0.0, 0.0]
-    renderView1.HiddenLineRemoval = 1
+    renderView1.CenterOfRotation = [-3093.128963605495, -12.621379412658825, -51.8330078125]
     renderView1.StereoType = 'Crystal Eyes'
-    renderView1.CameraPosition = [27524.318635989053, 0.0, 0.0]
-    renderView1.CameraFocalPoint = [-8796.610636273152, 0.0, 0.0]
-    renderView1.CameraViewUp = [0.0, 0.0, 1.0]
+    renderView1.CameraPosition = [32538.07420773949, -12.621379412658825, -448.7952673895133]
+    renderView1.CameraFocalPoint = [-4180.908036804926, -12.621379412658825, -39.71421303755679]
+    renderView1.CameraViewUp = [0.01114016904586556, 0.0, 0.9999379463914897]
     renderView1.CameraFocalDisk = 1.0
-    renderView1.CameraParallelScale = 9400.548231483104
+    renderView1.CameraParallelScale = 9504.161689198081
     renderView1.UseColorPaletteForBackground = 0
-    renderView1.Background = [0.9518883039597161, 1.0, 0.989547570000763]
+    renderView1.Background = [0.9835507743953612, 0.9876707103074693, 1.0]
     renderView1.BackEnd = 'OSPRay raycaster'
     renderView1.OSPRayMaterialLibrary = materialLibrary1
     
@@ -55,7 +58,7 @@ for file in os.listdir("/Users/macbook/OneDrive - UvA/mantle01/"):
     # create new layout object 'Layout #1'
     layout1 = CreateLayout(name='Layout #1')
     layout1.AssignView(0, renderView1)
-    layout1.SetSize(1784, 1122)
+    layout1.SetSize(1784, 1128)
     
     # ----------------------------------------------------------------
     # restore active view
@@ -65,7 +68,7 @@ for file in os.listdir("/Users/macbook/OneDrive - UvA/mantle01/"):
     # ----------------------------------------------------------------
     # setup the data processing pipelines
     # ----------------------------------------------------------------
-    spherical001nc = NetCDFReader(registrationName=f'{file}', FileName=[f'/Users/macbook/OneDrive - UvA/mantle01/{file}'])
+    spherical001nc = NetCDFReader(registrationName=f'{file}', FileName=[f'/Users/macbook/OneDrive - UvA/mantle{num}/{file}'])
 
     # create a new 'NetCDF Reader'
     spherical001nc.Dimensions = '(lat, r, lon)'
@@ -165,7 +168,7 @@ for file in os.listdir("/Users/macbook/OneDrive - UvA/mantle01/"):
     temperatureanomalyLUTColorBar = GetScalarBar(temperatureanomalyLUT, renderView1)
     temperatureanomalyLUTColorBar.WindowLocation = 'Any Location'
     temperatureanomalyLUTColorBar.Position = [0.0925588565022422, 0.5929997724428261]
-    temperatureanomalyLUTColorBar.Title = 'Temperature Anomaly [CÂ°]'
+    temperatureanomalyLUTColorBar.Title = 'Temperature Anomaly [C°]'
     temperatureanomalyLUTColorBar.ComponentTitle = ''
     temperatureanomalyLUTColorBar.HorizontalTitle = 1
     temperatureanomalyLUTColorBar.TitleColor = [0.0, 0.0, 0.0]
@@ -186,6 +189,8 @@ for file in os.listdir("/Users/macbook/OneDrive - UvA/mantle01/"):
     # ----------------------------------------------------------------
     # restore active source
     SetActiveSource(spherical001nc)
+    WriteImage(f'/Users/macbook/OneDrive - UvA/T_anom_{file}.png', renderView1,ImageResolution=[1784 ,728])
+
 # ----------------------------------------------------------------
     ResetSession()
 
